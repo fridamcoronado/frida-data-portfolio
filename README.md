@@ -1,6 +1,6 @@
-# 📊 Frida Martínez – Data Analytics Portfolio
+#  Frida Martínez – Data Analytics Portfolio
 
-👋 Welcome! I'm a Business Intelligence student at Tecnológico de Monterrey with hands-on experience in:
+Welcome! I'm a Business Intelligence student at Tecnológico de Monterrey with hands-on experience in:
 
 - Building interactive dashboards for real-time business tracking
 - Automating reporting pipelines with Python and Excel macros

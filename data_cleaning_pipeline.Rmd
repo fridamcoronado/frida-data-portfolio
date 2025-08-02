@@ -1,0 +1,164 @@
+---
+title: "Homework 03"
+author: "Frida Sofia Martinez Coronodo"
+date: "3/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Context
+
+We are going to work with a “Mental Health in Tech Survey” dataset, a series of 2016 survey responses aiming to capture mental health statuses and workplace attitudes among tech employees.
+
+```{r}
+library(visdat) #for visualizing missing data
+library(dplyr) #for data manipulation
+library(ggplot2) #for graphs and plots
+library(stringr) #string characters
+#library(assertive) #assert functions
+```
+
+## Step 1
+
+Import the information in the file "mental_health_in_tech_2016.csv" into a data frame. Review your dataset
+
+```{r}
+df <- read.csv("mental_health_in_tech_2016.csv")
+print(df)
+```
+
+
+## Step 2 
+
+Check if there are string inconsistencies (typos, capitalization errors, etc), and correct them. Hint: Focus on the Employees and Gender variables 
+#Employees variable (how many employees work in the company)
+#Gender variable (Gender of the employee)
+```{r}
+#Encontrar las inconsistencias:
+unique(df$Employees)
+unique(df$Gender)
+```
+#Quitar las inconsistencias
+```{r}
+df$Employees=
+  str_remove_all (df$Employees, c("jun-"="06-",
+"-may" = "-05"))
+```
+```{r}
+df$Gender <- str_replace_all(df$Gender, c(
+  "^(m|male|Male|MALE|male |Male )$" = "M",
+  "^(f|female|Female|FeM|feM|Female |female | Female)$" = "F"
+))
+```
+
+#Verificar que ya no haya inconsistencias
+```{r}
+unique(df$Employees)
+unique(df$Gender)
+```
+#Checar tabla 
+```{r}
+print(df)
+```
+#Employees variable (how many employees work in the company)
+#Gender variable (Gender of the employee)
+```{r}
+table(df$Gender)
+```
+
+
+## Step 3
+
+Are there some missing values? Replace them (you can use the mean, median, mode or other value) In any case, you have to justify your decision.
+```{r}
+#Yes there are missing values in the column "Gender", and I will not replace them with mode, mean or median because the values in Gender are not numeric, so RStudio can not get theri mode, mean or median. I will replace it with a NA.
+
+df$Gender[df$Gender == ""] <- NA
+```
+#Checar que ya no haya ""
+```{r}
+unique(df$Gender)
+```
+
+## Step 4
+
+Look for outliers in the Age variable and remove them.
+
+```{r}
+unique(df$Age)
+```
+
+
+```{r}
+library(ggplot2)
+
+ggplot(df, aes(x = Age)) +
+  geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
+  labs(title = "Histograma de la Edad",
+       x = "Edad",
+       y = "Frecuencia") +
+  theme_minimal()
+```
+```{r}
+library(dplyr)
+
+df_clean <- df %>%
+  filter(
+    !is.na(Age),
+    Age >= quantile(Age, 0.25, na.rm = TRUE) - 1.5 * IQR(Age, na.rm = TRUE),
+    Age <= quantile(Age, 0.75, na.rm = TRUE) + 1.5 * IQR(Age, na.rm = TRUE)
+  )
+
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(df, aes(x = Age)) +
+  geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
+  labs(title = "Histograma de la Edad",
+       x = "Edad",
+       y = "Frecuencia") +
+  theme_minimal()
+```
+
+
+
+
+
+# Step 5
+
+Review if the data type assigned to each variable is adecuate. If not, change it.(Numbers must be integers or doubles, some characters must be factors, etc)
+```{r}
+str(df)
+```
+```{r}
+df <- df %>%
+  mutate(
+    
+    Employees = as.factor(Employees),
+    Health_benefits = as.factor(Health_benefits),
+    Gender = as.factor(Gender),
+    Country_birth = as.factor(Country_birth),
+    Country_work = as.factor(Country_work),
+    Work_remotely = as.factor(Work_remotely),
+    
+    
+    Self_employed = as.factor(Self_employed),
+    Tech_company = as.factor(Tech_company),
+    IT_role = as.factor(IT_role),
+    
+  
+    Age = as.integer(Age)
+  )
+
+```
+
+```{r}
+str(df)
+```
+
+

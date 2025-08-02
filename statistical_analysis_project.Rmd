@@ -1,0 +1,178 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(readxl)
+```
+
+```{r}
+df <- read_xlsx("heart_disease_data.xlsx")
+(df)
+```
+#Descriptive Statistics
+Calculate the mean, median, standard deviation and variance of the variables: Age and RestingBP (5 points)
+```{r}
+
+
+mean(df$Age, na.rm = TRUE)
+median(df$Age, na.rm = TRUE)
+sd(df$Age, na.rm = TRUE)
+var(df$Age, na.rm = TRUE)
+
+
+mean(df$RestingBP, na.rm = TRUE)
+median(df$RestingBP, na.rm = TRUE)
+sd(df$RestingBP, na.rm = TRUE)
+var(df$RestingBP, na.rm = TRUE)
+
+```
+
+Indicate the bias of Age and RestingBP, use graphs or calculations to justify your answers. (10 points)
+
+```{r}
+
+mean_age <- mean(df$Age, na.rm = TRUE)
+median_age <- median(df$Age, na.rm = TRUE)
+sd_age <- sd(df$Age, na.rm = TRUE)
+
+mean_bp <- mean(df$RestingBP, na.rm = TRUE)
+median_bp <- median(df$RestingBP, na.rm = TRUE)
+sd_bp <- sd(df$RestingBP, na.rm = TRUE)
+
+
+bias_age <- 3 * (mean_age - median_age) / sd_age
+bias_bp <- 3 * (mean_bp - median_bp) / sd_bp
+
+
+bias_age
+bias_bp
+
+
+ggplot(df, aes(x = Age)) +
+  geom_histogram(binwidth = 5, fill = "skyblue", color = "black") +
+  labs(title = "Distribución de Edad", x = "Edad", y = "Frecuencia")
+
+
+ggplot(df, aes(x = RestingBP)) +
+  geom_histogram(binwidth = 5, fill = "salmon", color = "black") +
+  labs(title = "Distribución de Presión en Reposo", x = "RestingBP", y = "Frecuencia")
+
+```
+
+
+
+#Data cleansing
+Count the null values in all the columns of the dataset (5 points)
+```{r}
+colSums(is.na(df))
+
+```
+
+Impute the null values with the mean/median/mode of each variable. Justify your imputation for each variable. (20 points)
+```{r}
+
+# With mean(continuous variables without outliers)
+df$Cholesterol[is.na(df$Cholesterol)] <- mean(df$Cholesterol, na.rm = TRUE)
+
+# With median (with outliers o distribución sesgada)
+df$RestingBP[is.na(df$RestingBP)] <- median(df$RestingBP, na.rm = TRUE)
+
+#With mode (categorical variables)
+get_mode <- function(v) {
+  uniqv <- unique(v[!is.na(v)])
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+df$Sex[is.na(df$Sex)] <- get_mode(df$Sex)
+df$ChestPainType[is.na(df$ChestPainType)] <- get_mode(df$ChestPainType)
+
+```
+
+Identify outliers in the variable "Cholesterol" and delete the rows with those values. (15 points)
+```{r}
+
+
+Q1 <- quantile(df$Cholesterol, 0.25, na.rm = TRUE)
+Q3 <- quantile(df$Cholesterol, 0.75, na.rm = TRUE)
+IQR_value <- Q3 - Q1
+
+lower_bound <- Q1 - 1.5 * IQR_value
+upper_bound <- Q3 + 1.5 * IQR_value
+
+
+df <- df[df$Cholesterol >= lower_bound & df$Cholesterol <= upper_bound, ]
+
+```
+
+#Data manipulation
+Create a binary column (True/False) called "High Cholesterol" to indicate if a person has a Cholesterol > 200. (10 points)
+```{r}
+
+df$High_Cholesterol <- df$Cholesterol > 200
+(df)
+
+```
+
+Create a table to show the count of people with "High Cholesterol". (5 points)
+R= There are 486 people with "High Cholesterol"
+```{r}
+
+table(df$High_Cholesterol)
+
+```
+
+
+Create a graph to show if there is a relation between "High Cholesterol" and "HeartDisease". Explain your graph. (10 points)
+```{r}
+ggplot(df, aes(x = High_Cholesterol, fill = as.factor(HeartDisease))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Relation between High Cholesterol and Heart Disease",
+       x = "High Cholesterol (>200)",
+       y = "N. People",
+       fill = "HeartDisease") +
+  scale_fill_manual(values = c("0" = "blue", "1" = "red"),
+                    labels = c("No", "Sí")) +
+  theme_minimal()
+
+```
+R= There is indeed a relation between having high colesterol and heart disease, because the graph shows, that there  are more people with  high cholesterol and heart disease, than only with high heart disease.
+
+#Data visualization
+Create a scatterplot to show if there is a relation between "Cholesterol" and "Age". Explain your graph. (5 points)
+
+Use the variable "HeartDisease" to color people with Heart Disease (red) and people without Heart Disease (blue) in the previous scatterplot. (10 points)
+
+Modify the titles in the axes of the graph using the labels: "Cholesterol (mg/dl)" and "Age (years)" (5 points)
+```{r}
+
+df$HeartDisease <- as.factor(df$HeartDisease)
+
+
+ggplot(df, aes(x = Cholesterol, y = Age, color = HeartDisease)) +
+  geom_point(alpha = 0.7, size = 2) +
+  scale_color_manual(values = c("0" = "blue", "1" = "red"),
+                     labels = c("No Heart Disease", "Heart Disease")) +
+  labs(
+    title = "Relación entre Colesterol y Edad",
+    x = "Cholesterol (mg/dl)",
+    y = "Age (years)",
+    color = "Heart Disease"
+  ) +
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+
+

@@ -21,7 +21,7 @@ Developed a real-time Tableau dashboard integrated with Excel and Python scripts
 - Proposed and implemented new KPIs to improve visibility  
 - Reduced manual reporting effort by 30%  
 
-➡️ 
+➡️ https://docs.google.com/document/d/11J29OyFHhOPCwz1Ww-TbfvwkQZRB9q4T/edit?usp=sharing&ouid=108130480767779526953&rtpof=true&sd=true
 
 ---
 

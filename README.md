@@ -46,7 +46,8 @@ Created a segmented dashboard from nationwide promoter survey data.
 - Generated calculated fields for time-based analysis 
 
 
-➡️ 
+➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/data_cleaning_pipeline.Rmd
+➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/statistical_analysis_project.Rmd
 
 ---
 ### 4. SQL Reporting Queries  

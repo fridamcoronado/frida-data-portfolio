@@ -22,6 +22,7 @@ Developed a real-time Tableau dashboard integrated with Excel and Python scripts
 - Reduced manual reporting effort by 30%  
 
 ➡️ https://docs.google.com/document/d/11J29OyFHhOPCwz1Ww-TbfvwkQZRB9q4T/edit?usp=sharing&ouid=108130480767779526953&rtpof=true&sd=true
+
 ➡️ https://docs.google.com/document/d/1j80CfXEBaCj1g1NweBYnDmmMN9bI9dBu3EqVJrl2dNg/edit?tab=t.0#heading=h.4eyao9m94qmy
 ---
 
@@ -34,6 +35,7 @@ Created a segmented dashboard from nationwide promoter survey data.
 - Delivered weekly reports with strategic recommendations  
 
 ➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/Teleton_Dashboard.pdf
+
 ➡️ https://docs.google.com/document/d/1KFZ4C8Gwuez9lVRPMssCrYAX0SfC2aHqq25bXcZm_ZI/edit?tab=t.0
 
 
@@ -47,6 +49,7 @@ Created a segmented dashboard from nationwide promoter survey data.
 
 
 ➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/data_cleaning_pipeline.Rmd
+
 ➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/statistical_analysis_project.Rmd
 
 ---

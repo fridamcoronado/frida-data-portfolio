@@ -33,7 +33,7 @@ Created a segmented dashboard from nationwide promoter survey data.
 - Visualized results by region and role using Looker Studio  
 - Delivered weekly reports with strategic recommendations  
 
-➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/Tablero_Teletón.pdf
+➡️ https://github.com/fridamcoronado/frida-data-portfolio/blob/main/Teleton_Dashboard.pdf
 
 
 ---
